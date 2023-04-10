@@ -1,7 +1,7 @@
 defmodule Chat.OpenAI do
   @default_config %{
     model: "gpt-3.5-turbo",
-    api_key: "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",
+    api_key: System.get_env("OPENAI_API_KEY"),
     url: "https://api.openai.com/v1/chat/completions",
     max_tokens: 3500,
     system_message: %{
