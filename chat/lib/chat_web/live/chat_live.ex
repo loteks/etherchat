@@ -2,21 +2,25 @@ defmodule ChatWeb.ChatLive do
   use ChatWeb, :live_view
 
   def mount(params, _session, socket) do
-    {:ok, assign(socket, room: Map.get(params, "room_id"), prompt: "")}
+    {:ok, assign(socket, room: Map.get(params, "room_id"), id: nil, prompt: "")}
   end
 
   def handle_event("prompt", %{"prompt" => prompt}, socket) do
     # IO.inspect(prompt, label: "PROMPT")
-    socket = assign(socket, prompt: prompt)
+    socket = assign(socket, id: UUID.uuid4(), prompt: prompt)
     # IO.inspect(socket, label: "SOCKET")
     {:noreply, socket}
+  end
+
+  def response(prompt) do
+    Chat.OpenAI.callAPI(prompt)
   end
 
   def render(assigns) do
     ~H"""
     <h1>You are chatting with GPT in the <%= @room %> room</h1>
     <br />
-    <p><%= @prompt %></p>
+    <pre><%= response(@prompt) %></pre>
     <br />
     <form phx-submit="prompt">
       <input
