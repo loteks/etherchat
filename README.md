@@ -1,2 +1,2 @@
-# neubot
-Phoenix LiveView interface to RWKV
+# NeuBot
+Phoenix LiveView interface to ChatGPT
