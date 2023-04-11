@@ -1,0 +1,9 @@
+{application,req,
+             [{applications,[kernel,stdlib,elixir,logger,finch,mime,jason]},
+              {description,"req"},
+              {modules,['Elixir.Inspect.Req.Request','Elixir.Req',
+                        'Elixir.Req.Application','Elixir.Req.Request',
+                        'Elixir.Req.Response','Elixir.Req.Steps']},
+              {registered,[]},
+              {vsn,"0.3.6"},
+              {mod,{'Elixir.Req.Application',[]}}]}.
