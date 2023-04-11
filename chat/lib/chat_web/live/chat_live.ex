@@ -18,8 +18,6 @@ defmodule ChatWeb.ChatLive do
 
   def render(assigns) do
     ~H"""
-    <h1>You are chatting with GPT in the <%= @room %> room</h1>
-    <br />
     <pre><%= response(@prompt) %></pre>
     <br />
     <form phx-submit="prompt">
