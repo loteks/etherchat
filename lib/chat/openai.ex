@@ -1,48 +1,41 @@
 defmodule Chat.OpenAI do
-  @default_config %{
-    model: "gpt-3.5-turbo",
-    api_key: System.get_env("OPENAI_API_KEY"),
-    url: "https://api.openai.com/v1/chat/completions",
-    max_tokens: 3500,
-    system_message: %{
-      role: "system",
-      content:
-        "you are a programming assistant helping developers write apps in elixir and phoenix."
+  use GenServer
+
+  Application.put_env(:ex_openai, :api_key, "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")
+  Application.put_env(:ex_openai, :http_options, recv_timeout: 50_000)
+
+  @impl true
+  def init(_opts) do
+    {:ok, []}
+  end
+
+  defp new_msg(m) do
+    %ExOpenAI.Components.ChatCompletionRequestMessage{
+      content: m,
+      role: :user,
+      name: "user"
     }
-  }
+  end
 
-  def callAPI(prompt, config \\ @default_config) do
-    messages =
-      [
-        %{role: "user", content: prompt},
-        config.system_message
-      ]
-      |> Enum.reverse()
-      |> List.flatten()
+  @impl true
+  def handle_call({:msg, m}, _from, msgs) do
+    with msgs <- msgs ++ [new_msg(m)] do
+      case ExOpenAI.Chat.create_chat_completion(msgs, "gpt-3.5-turbo") do
+        {:ok, res} ->
+          first = List.first(res.choices)
+          {:reply, first.message.content, msgs ++ [first.message]}
 
-    body = %{model: config.model, messages: messages, max_tokens: config.max_tokens}
+        {:error, reason} ->
+          {:error, reason}
+      end
+    end
+  end
 
-    headers = [
-      Authorization: "Bearer #{config.api_key}",
-      "Content-Type": "Application/json; Charset=utf-8"
-    ]
+  def start_link(_opts) do
+    GenServer.start_link(__MODULE__, [], name: :gptserver)
+  end
 
-    response_body =
-      Req.post!(config.url, headers: headers, json: body, receive_timeout: 500_000).body
-
-    %{
-      "choices" => [
-        %{
-          "message" => %{
-            "content" => content
-          }
-        }
-      ]
-    } = response_body
-
-    # [%{role: "assistant", content: content}, %{role: "user", content: prompt} | history]
-    # |> Enum.reverse()
-
-    content
+  def send(msg) do
+    GenServer.call(:gptserver, {:msg, msg}, 50000)
   end
 end

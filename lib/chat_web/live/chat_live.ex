@@ -13,14 +13,14 @@ defmodule ChatWeb.ChatLive do
   end
 
   def response(prompt_body) do
-    Chat.OpenAI.callAPI(prompt_body)
+    Chat.OpenAI.send(prompt_body)
   end
 
   def render(assigns) do
     ~H"""
     <h1>Question: <%= @prompt_body %></h1>
     <br />
-    <pre><%= response(@prompt_body) %></pre>
+    <pre><%= response("what is the capital of texas") %></pre>
     <br />
     <form phx-submit="prompt">
       <input
