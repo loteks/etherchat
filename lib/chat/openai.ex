@@ -1,9 +1,6 @@
 defmodule Chat.OpenAI do
   use GenServer
 
-  Application.put_env(:ex_openai, :api_key, "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")
-  Application.put_env(:ex_openai, :http_options, recv_timeout: 50_000)
-
   @impl true
   def init(_opts) do
     {:ok, []}
