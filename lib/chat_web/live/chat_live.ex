@@ -2,30 +2,29 @@ defmodule ChatWeb.ChatLive do
   use ChatWeb, :live_view
 
   def mount(%{"room_id" => room_id}, _session, socket) do
-    {:ok, assign(socket, room: room_id, prompt_id: nil, prompt_body: "")}
+    {:ok, assign(socket, room: room_id, prompt: "", response: "")}
   end
 
-  def handle_event("prompt", %{"prompt_body" => prompt_body}, socket) do
-    # Chat.OpenAI.send(prompt_body)
+  def handle_event("prompt", %{"prompt" => prompt}, socket) do
     # IO.inspect(prompt, label: "PROMPT")
-    socket = assign(socket, prompt_id: UUID.uuid4(), prompt_body: response(prompt_body))
+    socket = assign(socket, prompt: prompt, response: Chat.OpenAI.send(prompt))
     # IO.inspect(socket, label: "SOCKET")
     {:noreply, socket}
   end
 
-  def response(prompt_body) do
-    Chat.OpenAI.send(prompt_body)
-  end
+  # NOTE : make "question" and "response" into users...
 
   def render(assigns) do
     ~H"""
     <br />
-    <pre><%= @prompt_body %></pre>
+    <h2>Question: <%= @prompt %></h2>
+    <br />
+    <h2>Response: <%= @response %></h2>
     <br />
     <form phx-submit="prompt">
       <input
         type="text"
-        name="prompt_body"
+        name="prompt"
         placeholder="Ask GPT a question..."
         autofocus
         autocomplete="off"
