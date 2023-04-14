@@ -6,8 +6,9 @@ defmodule ChatWeb.ChatLive do
   end
 
   def handle_event("prompt", %{"prompt_body" => prompt_body}, socket) do
+    # Chat.OpenAI.send(prompt_body)
     # IO.inspect(prompt, label: "PROMPT")
-    socket = assign(socket, prompt_id: UUID.uuid4(), prompt_body: prompt_body)
+    socket = assign(socket, prompt_id: UUID.uuid4(), prompt_body: response(prompt_body))
     # IO.inspect(socket, label: "SOCKET")
     {:noreply, socket}
   end
@@ -18,9 +19,8 @@ defmodule ChatWeb.ChatLive do
 
   def render(assigns) do
     ~H"""
-    <h1>Question: <%= @prompt_body %></h1>
     <br />
-    <pre><%= response("what is the capital of texas") %></pre>
+    <pre><%= @prompt_body %></pre>
     <br />
     <form phx-submit="prompt">
       <input
