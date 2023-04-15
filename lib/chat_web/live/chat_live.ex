@@ -6,8 +6,9 @@ defmodule ChatWeb.ChatLive do
   end
 
   def handle_event("prompt", %{"prompt" => prompt}, socket) do
-    IO.inspect(prompt, label: "PROMPT")
+    IO.inspect(%Chat.History{prompt: prompt}, label: "PROMPT")
     response = Chat.OpenAI.send(prompt)
+    IO.inspect(%Chat.History{response: response}, label: "RESPONSE")
     new_history = [prompt, response | socket.assigns.history]
 
     socket =
