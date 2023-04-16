@@ -2,21 +2,27 @@ defmodule ChatWeb.ChatLive do
   use ChatWeb, :live_view
 
   def mount(%{"room_id" => room_id}, _session, socket) do
-    {:ok, assign(socket, room: room_id, prompt: "", response: "", history: []),
+    topic = "room:#{room_id}"
+
+    if connected?(socket) do
+      ChatWeb.Endpoint.subscribe(topic)
+    end
+
+    {:ok, assign(socket, room: room_id, topic: topic, prompt: "", response: "", history: []),
      temporary_assigns: [history: []]}
   end
 
   def handle_event("prompt", %{"prompt" => prompt}, socket) do
-    IO.inspect(prompt, label: "PROMPT")
+    # IO.inspect(prompt, label: "PROMPT")
 
     response = Chat.OpenAI.send(prompt)
-    IO.inspect(response, label: "RESPONSE")
+    # IO.inspect(response, label: "RESPONSE")
 
-    history = [prompt, response]
-    IO.inspect(history, label: "HISTORY")
+    history = ["Question: #{prompt}", "Response: #{response}"]
+    # IO.inspect(history, label: "HISTORY")
 
     socket = assign(socket, prompt: prompt, response: response, history: history)
-    IO.inspect(socket, label: "SOCKET")
+    # IO.inspect(socket, label: "SOCKET")
 
     {:noreply, socket}
   end
