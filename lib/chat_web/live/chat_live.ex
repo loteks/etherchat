@@ -6,19 +6,17 @@ defmodule ChatWeb.ChatLive do
   end
 
   def handle_event("prompt", %{"prompt" => prompt}, socket) do
-    IO.inspect(%Chat.History{prompt: prompt}, label: "PROMPT")
+    IO.inspect(prompt, label: "PROMPT")
+
     response = Chat.OpenAI.send(prompt)
-    IO.inspect(%Chat.History{response: response}, label: "RESPONSE")
+    IO.inspect(response, label: "RESPONSE")
+
     new_history = [prompt, response | socket.assigns.history]
+    IO.inspect(new_history, label: "HISTORY")
 
-    socket =
-      assign(socket,
-        prompt: prompt,
-        response: response,
-        history: new_history
-      )
-
+    socket = assign(socket, prompt: prompt, response: response, history: new_history)
     IO.inspect(socket, label: "SOCKET")
+
     {:noreply, socket}
   end
 
@@ -28,6 +26,7 @@ defmodule ChatWeb.ChatLive do
     ~H"""
     <pre :for={msg <- @history}><%= msg %></pre>
     <br />
+
     <form phx-submit="prompt">
       <input
         type="text"
