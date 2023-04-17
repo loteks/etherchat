@@ -37,7 +37,7 @@ defmodule ChatWeb.ChatLive do
   def render(assigns) do
     ~H"""
     <div phx-update="append" id="msg">
-    <p :for={msg <- @history} id={UUID.uuid4()}><%= msg %></p></div>
+    <md-block :for={msg <- @history} id={UUID.uuid4()}><%= msg %></md-block></div>
     <br />
     <form phx-submit="prompt">
       <input
