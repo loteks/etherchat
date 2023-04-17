@@ -16,8 +16,11 @@ defmodule Chat.OpenAI do
 
   @impl true
   def handle_call({:msg, m}, _from, msgs) do
+    gpt3 = "gpt-3.5-turbo"
+    # gpt4 = "gpt-4"
+
     with msgs <- msgs ++ [new_msg(m)] do
-      case ExOpenAI.Chat.create_chat_completion(msgs, "gpt-3.5-turbo") do
+      case ExOpenAI.Chat.create_chat_completion(msgs, gpt3) do
         {:ok, res} ->
           first = List.first(res.choices)
           {:reply, first.message.content, msgs ++ [first.message]}
