@@ -24,15 +24,14 @@ defmodule ChatWeb.ChatLive do
     socket = assign(socket, prompt: prompt, response: response, history: history)
     # IO.inspect(socket, label: "SOCKET")
 
-    ChatWeb.Endpoint.broadcast(socket.assigns.topic, "new-chat", history)
+    ChatWeb.Endpoint.broadcast_from(self(), socket.assigns.topic, "new-chat", history)
 
     {:noreply, socket}
   end
 
   def handle_info(msg, socket) do
-    IO.inspect(msg.payload, label: "HANDLE_INFO")
-    # {:noreply, assign(socket, history: msg.payload)}
-    {:noreply, socket}
+    # IO.inspect(msg.payload, label: "HANDLE_INFO")
+    {:noreply, assign(socket, history: msg.payload)}
   end
 
   def render(assigns) do
