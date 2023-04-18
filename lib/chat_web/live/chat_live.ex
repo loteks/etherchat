@@ -29,6 +29,12 @@ defmodule ChatWeb.ChatLive do
     {:noreply, assign(socket, prompt: msg.payload)}
   end
 
+  # Note: format prompt using markdown
+  def address(url) do
+    base = "localhost:4000"
+    "#{base}/#{url}"
+  end
+
   def render(assigns) do
     ~H"""
     <div phx-update="append" id="msg">
@@ -45,7 +51,7 @@ defmodule ChatWeb.ChatLive do
       />
     </form>
     <br>
-    <h1>You are chatting with GPT in the <em><%= @room %></em> room</h1>
+    <h1>You are chatting with GPT at <em><%= address(@room) %></em></h1>
     """
   end
 end
