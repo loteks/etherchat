@@ -8,37 +8,33 @@ defmodule ChatWeb.ChatLive do
       ChatWeb.Endpoint.subscribe(topic)
     end
 
-    {:ok, assign(socket, room: room_id, topic: topic, prompt: "", response: "", history: []),
-     temporary_assigns: [history: []]}
+    {:ok, assign(socket, room: room_id, topic: topic, prompt: [], response: []),
+     temporary_assigns: [prompt: [], response: []]}
   end
 
   def handle_event("prompt", %{"prompt" => prompt}, socket) do
-    # IO.inspect(prompt, label: "PROMPT")
+    ChatWeb.Endpoint.broadcast(socket.assigns.topic, "msg", prompt)
+    Process.sleep(3000)
 
-    response = Chat.OpenAI.send(prompt)
-    # IO.inspect(response, label: "RESPONSE")
-
-    history = ["Question: #{prompt}", "Response: #{response}"]
-    # IO.inspect(history, label: "HISTORY")
-
-    socket = assign(socket, prompt: prompt, response: response, history: history)
-    # IO.inspect(socket, label: "SOCKET")
-
-    ChatWeb.Endpoint.broadcast_from(self(), socket.assigns.topic, "new-chat", history)
+    Task.start(fn ->
+      response = Chat.OpenAI.send(prompt)
+      ChatWeb.Endpoint.broadcast(socket.assigns.topic, "msg", response)
+    end)
 
     {:noreply, socket}
   end
 
   def handle_info(msg, socket) do
     # IO.inspect(msg.payload, label: "HANDLE_INFO")
-    {:noreply, assign(socket, history: msg.payload)}
+    {:noreply, assign(socket, prompt: msg.payload)}
   end
 
   def render(assigns) do
     ~H"""
     <div phx-update="append" id="msg">
-    <md-block :for={msg <- @history} id={UUID.uuid4()}><%= msg %></md-block></div>
-    <br />
+    <md-block :for={prompt <- [@prompt]} id={UUID.uuid4()}><%= prompt %></md-block>
+    <md-block :for={response <- [@response]} id={UUID.uuid4()}><%= response %></md-block></div>
+    <br>
     <form phx-submit="prompt">
       <input
         type="text"
