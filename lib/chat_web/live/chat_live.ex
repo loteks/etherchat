@@ -14,8 +14,8 @@ defmodule ChatWeb.ChatLive do
 
   def handle_event("prompt", %{"prompt" => prompt}, socket) do
     ChatWeb.Endpoint.broadcast(socket.assigns.topic, "msg", prompt)
-    Process.sleep(3000)
 
+    # Note: need a supervisor?
     Task.start(fn ->
       response = Chat.OpenAI.send(prompt)
       ChatWeb.Endpoint.broadcast(socket.assigns.topic, "msg", response)
@@ -53,5 +53,7 @@ defmodule ChatWeb.ChatLive do
     <br>
     <h1>You are chatting with GPT at <em><%= address(@room) %></em></h1>
     """
+
+    # Note: make a clickable link for sharing?
   end
 end
