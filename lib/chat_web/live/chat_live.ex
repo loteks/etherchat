@@ -27,10 +27,9 @@ defmodule ChatWeb.ChatLive do
     {:noreply, assign(socket, prompt: msg.payload)}
   end
 
-  # Note: format prompt using markdown
-  def address(url) do
-    base = "localhost:4000"
-    "#{base}/#{url}"
+  def handle_params(_params, uri, socket) do
+    # IO.inspect(uri, label: "URI")
+    {:noreply, assign(socket, uri: URI.parse(uri))}
   end
 
   def render(assigns) do
@@ -49,9 +48,7 @@ defmodule ChatWeb.ChatLive do
       />
     </form>
     <br>
-    <h1>You are chatting with GPT at <em><%= address(@room) %></em></h1>
+    <h1>You are chatting with GPT at <em><%= @uri %></em></h1>
     """
-
-    # Note: make a clickable link for sharing?
   end
 end
