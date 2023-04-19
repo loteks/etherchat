@@ -15,8 +15,7 @@ defmodule ChatWeb.ChatLive do
   def handle_event("prompt", %{"prompt" => prompt}, socket) do
     ChatWeb.Endpoint.broadcast(socket.assigns.topic, "msg", prompt)
 
-    # Note: need a supervisor?
-    Task.start(fn ->
+    Task.Supervisor.start_child(ChatWeb.TaskSupervisor, fn ->
       response = Chat.OpenAI.send(prompt)
       ChatWeb.Endpoint.broadcast(socket.assigns.topic, "msg", response)
     end)
@@ -24,8 +23,7 @@ defmodule ChatWeb.ChatLive do
     {:noreply, socket}
   end
 
-  def handle_info(msg, socket) do
-    # IO.inspect(msg.payload, label: "HANDLE_INFO")
+  def handle_info(%{event: "msg"} = msg, socket) do
     {:noreply, assign(socket, prompt: msg.payload)}
   end
 
