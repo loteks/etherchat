@@ -23,6 +23,10 @@ defmodule ChatWeb.ChatLive do
     {:noreply, socket}
   end
 
+  def handle_event("refresh", _params, socket) do
+    {:noreply, push_navigate(socket, to: "/", replace: true)}
+  end
+
   def handle_info(%{event: "msg"} = msg, socket) do
     {:noreply, assign(socket, prompt: msg.payload)}
   end
@@ -49,6 +53,8 @@ defmodule ChatWeb.ChatLive do
     </form>
     <br>
     <h1>You are chatting with GPT at <em><%= @uri %></em></h1>
+    <br>
+    <h2><button type="button" phx-click="refresh">Click Here</button> to generate a new private page </h2>
     """
   end
 end
