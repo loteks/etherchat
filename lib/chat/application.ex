@@ -10,8 +10,6 @@ defmodule Chat.Application do
     children = [
       # Start the Telemetry supervisor
       ChatWeb.Telemetry,
-      # Start the Ecto repository
-      Chat.Repo,
       # Start the PubSub system
       {Phoenix.PubSub, name: Chat.PubSub},
       # Start Finch

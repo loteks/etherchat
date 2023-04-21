@@ -54,7 +54,7 @@ defmodule ChatWeb.ChatLive do
     <br>
     <h1>You are chatting with GPT at <em><%= @uri %></em></h1>
     <br>
-    <h2><button type="button" phx-click="refresh">Click Here</button> to generate a new private page </h2>
+    <h2><button type="button" phx-click="refresh">Click</button> to generate a new private page </h2>
     """
   end
 end
