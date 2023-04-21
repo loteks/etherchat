@@ -32,7 +32,6 @@ defmodule ChatWeb.ChatLive do
   end
 
   def handle_params(_params, uri, socket) do
-    # IO.inspect(uri, label: "URI")
     {:noreply, assign(socket, uri: URI.parse(uri))}
   end
 
