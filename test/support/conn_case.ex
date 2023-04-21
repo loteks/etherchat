@@ -30,9 +30,4 @@ defmodule ChatWeb.ConnCase do
       import ChatWeb.ConnCase
     end
   end
-
-  setup tags do
-    Chat.DataCase.setup_sandbox(tags)
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
-  end
 end

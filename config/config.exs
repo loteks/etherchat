@@ -15,9 +15,6 @@ config :ex_openai,
   # optional, passed to [HTTPoison.Request](https://hexdocs.pm/httpoison/HTTPoison.Request.html) options
   http_options: [recv_timeout: 50_000]
 
-config :chat,
-  ecto_repos: [Chat.Repo]
-
 # Configures the endpoint
 config :chat, ChatWeb.Endpoint,
   url: [host: "localhost"],
