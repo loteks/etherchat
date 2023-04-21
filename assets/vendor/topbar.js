@@ -47,7 +47,7 @@
     },
     options = {
       autoRun: true,
-      barThickness: 3,
+      barThickness: 10,
       barColors: {
         0: "rgba(26,  188, 156, .9)",
         ".25": "rgba(52,  152, 219, .9)",
@@ -101,7 +101,7 @@
         if (delay) {
           if (delayTimerId) return;
           delayTimerId = setTimeout(() => topbar.show(), delay);
-        } else  {
+        } else {
           showing = true;
           if (fadeTimerId !== null) window.cancelAnimationFrame(fadeTimerId);
           if (!canvas) createCanvas();

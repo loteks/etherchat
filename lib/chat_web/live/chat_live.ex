@@ -8,37 +8,40 @@ defmodule ChatWeb.ChatLive do
       ChatWeb.Endpoint.subscribe(topic)
     end
 
-    {:ok, assign(socket, room: room_id, topic: topic, prompt: "", response: "", history: []),
-     temporary_assigns: [history: []]}
+    {:ok, assign(socket, room: room_id, topic: topic, prompt: [], response: []),
+     temporary_assigns: [prompt: [], response: []]}
   end
 
   def handle_event("prompt", %{"prompt" => prompt}, socket) do
-    # IO.inspect(prompt, label: "PROMPT")
+    ChatWeb.Endpoint.broadcast(socket.assigns.topic, "msg", prompt)
 
-    response = Chat.OpenAI.send(prompt)
-    # IO.inspect(response, label: "RESPONSE")
-
-    history = ["Question: #{prompt}", "Response: #{response}"]
-    # IO.inspect(history, label: "HISTORY")
-
-    socket = assign(socket, prompt: prompt, response: response, history: history)
-    # IO.inspect(socket, label: "SOCKET")
-
-    ChatWeb.Endpoint.broadcast_from(self(), socket.assigns.topic, "new-chat", history)
+    Task.Supervisor.start_child(ChatWeb.TaskSupervisor, fn ->
+      response = Chat.OpenAI.send(prompt)
+      ChatWeb.Endpoint.broadcast(socket.assigns.topic, "msg", response)
+    end)
 
     {:noreply, socket}
   end
 
-  def handle_info(msg, socket) do
-    # IO.inspect(msg.payload, label: "HANDLE_INFO")
-    {:noreply, assign(socket, history: msg.payload)}
+  def handle_event("refresh", _params, socket) do
+    {:noreply, push_navigate(socket, to: "/", replace: true)}
+  end
+
+  def handle_info(%{event: "msg"} = msg, socket) do
+    {:noreply, assign(socket, prompt: msg.payload)}
+  end
+
+  def handle_params(_params, uri, socket) do
+    # IO.inspect(uri, label: "URI")
+    {:noreply, assign(socket, uri: URI.parse(uri))}
   end
 
   def render(assigns) do
     ~H"""
     <div phx-update="append" id="msg">
-    <md-block :for={msg <- @history} id={UUID.uuid4()}><%= msg %></md-block></div>
-    <br />
+    <md-block :for={prompt <- [@prompt]} id={UUID.uuid4()}><%= prompt %></md-block>
+    <md-block :for={response <- [@response]} id={UUID.uuid4()}><%= response %></md-block></div>
+    <br>
     <form phx-submit="prompt">
       <input
         type="text"
@@ -49,7 +52,9 @@ defmodule ChatWeb.ChatLive do
       />
     </form>
     <br>
-    <h1>You are chatting with GPT in the <em><%= @room %></em> room</h1>
+    <h1>You are chatting with GPT at <em><%= @uri %></em></h1>
+    <br>
+    <h2><button type="button" phx-click="refresh">Click Here</button> to generate a new private page </h2>
     """
   end
 end

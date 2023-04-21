@@ -20,7 +20,10 @@ defmodule Chat.Application do
       ChatWeb.Endpoint,
       # Start a worker by calling: Chat.Worker.start_link(arg)
       # {Chat.Worker, arg}
-      {Chat.OpenAI, nil}
+      # Start the OpenAI GenServer
+      {Chat.OpenAI, nil},
+      # Start Task Supervisor
+      {Task.Supervisor, name: ChatWeb.TaskSupervisor}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
