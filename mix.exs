@@ -50,7 +50,8 @@ defmodule Chat.MixProject do
       {:mnemonic_slugs, "~> 0.0.3"},
       {:uuid, "~> 1.1"},
       {:req, "~> 0.3.6"},
-      {:ex_openai, "~> 1.0"}
+      {:ex_openai, "~> 1.0"},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
   end
 
