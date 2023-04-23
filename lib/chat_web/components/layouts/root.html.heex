@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="scrollbar-gutter: stable;">
+<html data-theme="dark" lang="en" style="scrollbar-gutter: stable;">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,13 +8,13 @@
       <%= assigns[:page_title] || "Chat" %>
     </.live_title>
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.5/dist/full.css" rel="stylesheet" type="text/css" />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
     <script type="module" src="https://md-block.verou.me/md-block.js"></script>
-    <script src="https://stretchy.verou.me/dist/stretchy.iife.min.js" async></script>
-    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" rel="stylesheet" />
   </head>
-  <body class="antialiased bg-white">
+  <body class="antialiased">
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
     <%= @inner_content %>
   </body>

@@ -46,6 +46,7 @@ defmodule ChatWeb.ChatLive do
         type="text"
         name="prompt"
         placeholder="Ask GPT a question..."
+        class="input input-bordered input-lg w-full max-w-xs"
         autofocus
         autocomplete="off"
       />
@@ -53,7 +54,11 @@ defmodule ChatWeb.ChatLive do
     <br>
     <h1>You are chatting with GPT at <em><%= @uri %></em></h1>
     <br>
-    <h2><button type="button" phx-click="refresh">Click</button> to generate a new private page </h2>
+    <h2>
+    <button
+        class="btn btn-square"
+        type="button"
+        phx-click="refresh">Click</button> to generate a new private page </h2>
     """
   end
 end
