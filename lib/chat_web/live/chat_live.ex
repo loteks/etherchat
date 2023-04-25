@@ -38,27 +38,26 @@ defmodule ChatWeb.ChatLive do
   def render(assigns) do
     ~H"""
     <div phx-update="append" id="msg">
-    <md-block :for={prompt <- [@prompt]} id={UUID.uuid4()}><%= prompt %></md-block>
+    <md-block :for={prompt <- [@prompt]} id={UUID.uuid4()}><%= prompt %></md-block><br>
     <md-block :for={response <- [@response]} id={UUID.uuid4()}><%= response %></md-block></div>
     <br>
     <form phx-submit="prompt">
       <input
         type="text"
         name="prompt"
-        placeholder="Ask GPT a question..."
+        placeholder="Ask NeuBot a question..."
         class="input input-bordered input-lg w-full"
         autofocus
         autocomplete="off"
       />
     </form>
     <br>
-    <h1>You are chatting with GPT at <em><%= @uri %></em></h1>
+    <p class="text-xl">You are chatting with NeuBot at <em><%= @uri %></em></p>
     <br>
-    <h2>
+    <p class="text-lg">
     <button
-        class="btn btn-square"
-        type="button"
-        phx-click="refresh">Click</button> to generate a new private page </h2>
+      class="btn-link"
+      phx-click="refresh">Generate</button> a new private chat page</p>
     """
   end
 end
