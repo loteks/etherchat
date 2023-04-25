@@ -46,7 +46,7 @@ defmodule ChatWeb.ChatLive do
         type="text"
         name="prompt"
         placeholder="Ask GPT a question..."
-        class="input input-bordered input-lg w-full max-w-xs"
+        class="input input-bordered input-lg w-full"
         autofocus
         autocomplete="off"
       />
