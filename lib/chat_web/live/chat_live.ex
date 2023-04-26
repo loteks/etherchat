@@ -39,7 +39,6 @@ defmodule ChatWeb.ChatLive do
     ~H"""
     <div phx-update="append" id="msg">
     <md-block :for={prompt <- [@prompt]} id={UUID.uuid4()}><%= prompt %></md-block></div>
-    <div class="pt-6 pb-8">   </div>
     <div phx-update="append" id="msg">
     <md-block :for={response <- [@response]} id={UUID.uuid4()}><%= response %></md-block></div>
     <br>
