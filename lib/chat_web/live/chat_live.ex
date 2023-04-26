@@ -46,14 +46,14 @@ defmodule ChatWeb.ChatLive do
       <input
         type="text"
         name="prompt"
-        placeholder="Ask NeuBot a question..."
+        placeholder="Ask Neubot a question..."
         class="input input-bordered input-lg w-full"
         autofocus
         autocomplete="off"
       />
     </form>
     <br>
-    <p class="text-xl">You are chatting with NeuBot at <em><%= @uri %></em></p>
+    <p class="text-xl">You are chatting with Neubot at <em><%= @uri %></em></p>
     <br>
     <p class="text-lg">
     <button
