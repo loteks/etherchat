@@ -28,11 +28,11 @@ defmodule ChatWeb.ChatLive do
   end
 
   def handle_info(%{event: "new_prompt"} = msg, socket) do
-    {:noreply, assign(socket, prompt: "Q: #{msg.payload}")}
+    {:noreply, assign(socket, prompt: "🧑‍💻 #{msg.payload}")}
   end
 
   def handle_info(%{event: "new_response"} = msg, socket) do
-    {:noreply, assign(socket, response: "A: #{msg.payload}")}
+    {:noreply, assign(socket, response: "🤖 #{msg.payload}")}
   end
 
   def handle_params(_params, uri, socket) do
