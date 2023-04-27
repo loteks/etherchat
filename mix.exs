@@ -51,7 +51,7 @@ defmodule Chat.MixProject do
       {:uuid, "~> 1.1"},
       {:req, "~> 0.3.6"},
       {:ex_openai, "~> 1.0"},
-      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
+      {:tailwind_formatter, "~> 0.3.5", only: :dev, runtime: false}
     ]
   end
 
