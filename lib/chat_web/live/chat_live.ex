@@ -41,13 +41,15 @@ defmodule ChatWeb.ChatLive do
 
   def render(assigns) do
     ~H"""
-    <div phx-update="append" id="new_chat">
+    <div phx-update="append" id="chat">
       <md-block :for={prompt <- [@prompt]} class="mt-5 mb-5 block" id={UUID.uuid4()}>
         <%= prompt %>
       </md-block>
-      <md-block :for={response <- [@response]} id={UUID.uuid4()}><%= response %></md-block>
+      <md-block :for={response <- [@response]} class="mt-5 mb-5 block" id={UUID.uuid4()}>
+        <%= response %>
+      </md-block>
     </div>
-    <br />
+    <br>
     <form phx-submit="prompt">
       <input
         type="text"
@@ -58,9 +60,9 @@ defmodule ChatWeb.ChatLive do
         autocomplete="off"
       />
     </form>
-    <br />
+    <br>
     <p class="text-xl">You are chatting with Neubot at <em><%= @uri %></em></p>
-    <br />
+    <br>
     <p class="text-lg">
       <button class="btn-link" phx-click="refresh">Generate</button> a new private chat page
     </p>
