@@ -13,11 +13,11 @@ defmodule ChatWeb.ChatLive do
   end
 
   def handle_event("prompt", %{"prompt" => prompt}, socket) do
-    ChatWeb.Endpoint.broadcast(socket.assigns.topic, "msg", prompt)
+    ChatWeb.Endpoint.broadcast(socket.assigns.topic, "new_prompt", prompt)
 
     Task.Supervisor.start_child(ChatWeb.TaskSupervisor, fn ->
       response = Chat.OpenAI.send(prompt)
-      ChatWeb.Endpoint.broadcast(socket.assigns.topic, "msg", response)
+      ChatWeb.Endpoint.broadcast(socket.assigns.topic, "new_response", response)
     end)
 
     {:noreply, socket}
@@ -27,8 +27,12 @@ defmodule ChatWeb.ChatLive do
     {:noreply, push_navigate(socket, to: "/", replace: true)}
   end
 
-  def handle_info(%{event: "msg"} = msg, socket) do
-    {:noreply, assign(socket, prompt: msg.payload)}
+  def handle_info(%{event: "new_prompt"} = msg, socket) do
+    {:noreply, assign(socket, prompt: "Q: #{msg.payload}")}
+  end
+
+  def handle_info(%{event: "new_response"} = msg, socket) do
+    {:noreply, assign(socket, response: "A: #{msg.payload}")}
   end
 
   def handle_params(_params, uri, socket) do
@@ -37,12 +41,10 @@ defmodule ChatWeb.ChatLive do
 
   def render(assigns) do
     ~H"""
-    <div phx-update="append" id="msg">
-      <md-block :for={prompt <- [@prompt]} class="mb-5 block" id={UUID.uuid4()}>
+    <div phx-update="append" id="new_chat">
+      <md-block :for={prompt <- [@prompt]} class="mt-5 mb-5 block" id={UUID.uuid4()}>
         <%= prompt %>
       </md-block>
-    </div>
-    <div phx-update="append" id="msg">
       <md-block :for={response <- [@response]} id={UUID.uuid4()}><%= response %></md-block>
     </div>
     <br />
