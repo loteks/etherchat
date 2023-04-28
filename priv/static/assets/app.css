@@ -958,18 +958,6 @@ select {
   height: 1.25rem;
 }
 
-.h-24 {
-  height: 6rem;
-}
-
-.h-20 {
-  height: 5rem;
-}
-
-.h-10 {
-  height: 2.5rem;
-}
-
 .min-h-\[6rem\] {
   min-height: 6rem;
 }

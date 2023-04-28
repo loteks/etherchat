@@ -18,7 +18,7 @@ defmodule Chat.OpenAI do
   def handle_call({:msg, m}, _from, msgs) do
     gpt3 = "gpt-3.5-turbo"
     # gpt4 = "gpt-4"
-
+    # IO.inspect(msgs, label: "MSG")
     with msgs <- msgs ++ [new_msg(m)] do
       case ExOpenAI.Chat.create_chat_completion(msgs, gpt3) do
         {:ok, res} ->

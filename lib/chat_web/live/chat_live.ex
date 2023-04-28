@@ -8,7 +8,7 @@ defmodule ChatWeb.ChatLive do
       ChatWeb.Endpoint.subscribe(topic)
     end
 
-    {:ok, assign(socket, room: room_id, topic: topic, prompt: [], response: []),
+    {:ok, assign(socket, room: room_id, topic: topic, loading: nil, prompt: [], response: []),
      temporary_assigns: [prompt: [], response: []]}
   end
 
@@ -28,11 +28,11 @@ defmodule ChatWeb.ChatLive do
   end
 
   def handle_info(%{event: "new_prompt"} = msg, socket) do
-    {:noreply, assign(socket, prompt: "🧑‍💻 #{msg.payload}")}
+    {:noreply, assign(socket, loading: true, prompt: "🧑‍💻 #{msg.payload}")}
   end
 
   def handle_info(%{event: "new_response"} = msg, socket) do
-    {:noreply, assign(socket, response: "🤖 #{msg.payload}")}
+    {:noreply, assign(socket, loading: nil, response: "🤖 #{msg.payload}")}
   end
 
   def handle_params(_params, uri, socket) do
@@ -41,6 +41,7 @@ defmodule ChatWeb.ChatLive do
 
   def render(assigns) do
     ~H"""
+    <%= Kernel.inspect(@loading) %>
     <div phx-update="append" id="chat">
       <md-block :for={prompt <- [@prompt]} class="mt-5 mb-5 block" id={UUID.uuid4()}>
         <%= prompt %>
