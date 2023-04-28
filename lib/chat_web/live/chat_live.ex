@@ -8,7 +8,7 @@ defmodule ChatWeb.ChatLive do
       ChatWeb.Endpoint.subscribe(topic)
     end
 
-    {:ok, assign(socket, room: room_id, topic: topic, loading: nil, prompt: [], response: []),
+    {:ok, assign(socket, room: room_id, topic: topic, loading: false, prompt: [], response: []),
      temporary_assigns: [prompt: [], response: []]}
   end
 
@@ -32,7 +32,7 @@ defmodule ChatWeb.ChatLive do
   end
 
   def handle_info(%{event: "new_response"} = msg, socket) do
-    {:noreply, assign(socket, loading: nil, response: "🤖 #{msg.payload}")}
+    {:noreply, assign(socket, loading: false, response: "🤖 #{msg.payload}")}
   end
 
   def handle_params(_params, uri, socket) do
@@ -41,7 +41,6 @@ defmodule ChatWeb.ChatLive do
 
   def render(assigns) do
     ~H"""
-    <%= Kernel.inspect(@loading) %>
     <div phx-update="append" id="chat">
       <md-block :for={prompt <- [@prompt]} class="mt-5 mb-5 block" id={UUID.uuid4()}>
         <%= prompt %>
@@ -50,7 +49,6 @@ defmodule ChatWeb.ChatLive do
         <%= response %>
       </md-block>
     </div>
-    <br>
     <form phx-submit="prompt">
       <input
         type="text"
@@ -61,6 +59,7 @@ defmodule ChatWeb.ChatLive do
         autocomplete="off"
       />
     </form>
+    <progress :if={@loading} class="progress progress-info w-56"></progress>
     <br>
     <p class="text-xl">You are chatting with Neubot at <em><%= @uri %></em></p>
     <br>

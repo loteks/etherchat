@@ -958,6 +958,14 @@ select {
   height: 1.25rem;
 }
 
+.h-12 {
+  height: 3rem;
+}
+
+.h-52 {
+  height: 13rem;
+}
+
 .min-h-\[6rem\] {
   min-height: 6rem;
 }
@@ -996,6 +1004,10 @@ select {
 
 .w-full {
   width: 100%;
+}
+
+.w-56 {
+  width: 14rem;
 }
 
 .max-w-3xl {
@@ -1176,6 +1188,11 @@ select {
   fill: #881337;
 }
 
+.object-contain {
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
 .p-0 {
   padding: 0px;
 }
@@ -1226,6 +1243,10 @@ select {
 
 .pr-6 {
   padding-right: 1.5rem;
+}
+
+.pr-4 {
+  padding-right: 1rem;
 }
 
 .text-left {
