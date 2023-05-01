@@ -60,9 +60,9 @@ defmodule ChatWeb.ChatLive do
       />
     </form>
     <progress :if={@loading} class="progress progress-info w-56"></progress>
-    <br>
+    <br />
     <p class="text-xl">You are chatting with Neubot at <em><%= @uri %></em></p>
-    <br>
+    <br />
     <p class="text-lg">
       <button class="btn-link" phx-click="refresh">Generate</button> a new private chat page
     </p>
