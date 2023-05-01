@@ -53,7 +53,7 @@ defmodule ChatWeb.ChatLive do
       <input
         type="text"
         name="prompt"
-        placeholder="Ask Neubot a question..."
+        placeholder="Ask Neubot a coding question..."
         class="input input-bordered input-lg w-full"
         autofocus
         autocomplete="off"
