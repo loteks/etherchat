@@ -64,7 +64,7 @@ defmodule ChatWeb.ChatLive do
     <p class="text-xl">You are chatting with Neubot at <em><%= @uri %></em></p>
     <br />
     <p class="text-lg">
-      <button class="btn-link" phx-click="refresh">Generate</button> a new personal chat page
+      <button class="btn-link" phx-click="refresh">Generate</button> a new private chat page
     </p>
     """
   end
