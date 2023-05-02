@@ -866,6 +866,11 @@ select {
   margin-right: auto;
 }
 
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
 .mb-5 {
   margin-bottom: 1.25rem;
 }
@@ -1273,6 +1278,21 @@ select {
   line-height: 1.75rem;
 }
 
+.text-5xl {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+.text-6xl {
+  font-size: 3.75rem;
+  line-height: 1;
+}
+
 .font-bold {
   font-weight: 700;
 }
@@ -1456,6 +1476,11 @@ select {
 }
 
 /* This file is for your main application CSS */
+
+.indeterminate\:after\:\[animation-duration\:1s\]:indeterminate::after {
+  content: var(--tw-content);
+  animation-duration: 1s;
+}
 
 .hover\:cursor-pointer:hover {
   cursor: pointer;
