@@ -1,1 +1,2 @@
-*.ex linguist-detectable=false
+*.js linguist-detectable=false
+*.exs linguist-detectable=false
