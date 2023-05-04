@@ -80,7 +80,7 @@ defmodule ChatWeb.ChatLive do
     <br />
     <p class="text-xl">You are chatting with Neubot at <em><%= @uri %></em></p>
     <br />
-    <p class="text-lg">You can share this page for group chats or <button class="btn-link" phx-click="refresh">generate</button> a new random page</p>
+    <p class="text-lg">Share this page for group chats or <button class="btn-link" phx-click="refresh">generate</button> a new random page</p>
     """
   end
 end
