@@ -2,7 +2,7 @@ defmodule ChatWeb.ChatLive do
   use ChatWeb, :live_view
 
   @moduledoc """
-  Module provides a LiveView interface to ChatGPT with PubSub for sharing chats.
+  Module provides a LiveView interface to ChatGPT with PubSub to share live chats.
   """
 
   @doc """
@@ -22,7 +22,8 @@ defmodule ChatWeb.ChatLive do
   end
 
   @doc """
-  Receive a prompt and send Task to OpenAI for response then share both via PubSub.
+  Receive a prompt, send Task to OpenAI for response then share both via PubSub.
+  Handle refresh event to generate new random page on demand.
   """
 
   @impl true
@@ -38,6 +39,11 @@ defmodule ChatWeb.ChatLive do
   end
 
   @impl true
+  def handle_event("refresh", _params, socket) do
+    {:noreply, push_navigate(socket, to: "/", replace: true)}
+  end
+
+  @impl true
   def handle_info(%{event: "new_prompt"} = msg, socket) do
     {:noreply, assign(socket, loading: true, prompt: "🧑‍💻 #{msg.payload}")}
   end
@@ -48,17 +54,12 @@ defmodule ChatWeb.ChatLive do
   end
 
   @doc """
-  Find the full URL we are on and enable page refresh.
+  Find the full URL we are on.
   """
 
   @impl true
   def handle_params(_params, uri, socket) do
     {:noreply, assign(socket, uri: URI.parse(uri))}
-  end
-
-  @impl true
-  def handle_event("refresh", _params, socket) do
-    {:noreply, push_navigate(socket, to: "/", replace: true)}
   end
 
   @impl true
