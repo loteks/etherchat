@@ -1,6 +1,15 @@
 defmodule ChatWeb.ChatLive do
   use ChatWeb, :live_view
 
+  @moduledoc """
+  Module provides a LiveView interface to ChatGPT with PubSub for sharing chats.
+  """
+
+  @doc """
+  Use new random page generated in page_controller to initiate liveview mount.
+  Each page is a topic with a prompt and response.
+  """
+
   @impl true
   def mount(%{"room_id" => room_id}, _session, socket) do
     topic = "room:#{room_id}"
@@ -9,8 +18,12 @@ defmodule ChatWeb.ChatLive do
       ChatWeb.Endpoint.subscribe(topic)
     end
 
-    {:ok, assign(socket, room: room_id, topic: topic, loading: false, prompt: [], response: []), temporary_assigns: [prompt: [], response: []]}
+    {:ok, assign(socket, topic: topic, loading: false, prompt: [], response: []), temporary_assigns: [prompt: [], response: []]}
   end
+
+  @doc """
+  Receive a prompt and send Task to OpenAI for response then share both via PubSub.
+  """
 
   @impl true
   def handle_event("prompt", %{"prompt" => prompt}, socket) do
@@ -25,11 +38,6 @@ defmodule ChatWeb.ChatLive do
   end
 
   @impl true
-  def handle_event("refresh", _params, socket) do
-    {:noreply, push_navigate(socket, to: "/", replace: true)}
-  end
-
-  @impl true
   def handle_info(%{event: "new_prompt"} = msg, socket) do
     {:noreply, assign(socket, loading: true, prompt: "🧑‍💻 #{msg.payload}")}
   end
@@ -39,9 +47,18 @@ defmodule ChatWeb.ChatLive do
     {:noreply, assign(socket, loading: false, response: "🤖 #{msg.payload}")}
   end
 
+  @doc """
+  Find the full URL we are on and enable page refresh.
+  """
+
   @impl true
   def handle_params(_params, uri, socket) do
     {:noreply, assign(socket, uri: URI.parse(uri))}
+  end
+
+  @impl true
+  def handle_event("refresh", _params, socket) do
+    {:noreply, push_navigate(socket, to: "/", replace: true)}
   end
 
   @impl true

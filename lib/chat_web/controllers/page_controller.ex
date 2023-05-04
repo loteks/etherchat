@@ -1,10 +1,11 @@
 defmodule ChatWeb.PageController do
   use ChatWeb, :controller
 
+  @moduledoc """
+  Use MnemonicSlugs to generate a new random readable page name with each visit to /
+  """
+
   def home(conn, _params) do
-    # The home page is often custom made,
-    # so skip the default app layout.
-    # render(conn, :home, layout: false)
     room = MnemonicSlugs.generate_slug(3)
     redirect(conn, to: "/#{room}")
   end

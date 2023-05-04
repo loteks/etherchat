@@ -52,6 +52,7 @@ defmodule Chat.MixProject do
       {:req, "~> 0.3.6"},
       {:ex_openai, "~> 1.0"},
       {:tailwind_formatter, "~> 0.3.5", only: :dev, runtime: false},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:styler, "~> 0.5", only: [:dev, :test], runtime: false}
     ]
   end

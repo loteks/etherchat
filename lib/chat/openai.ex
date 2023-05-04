@@ -1,6 +1,11 @@
 defmodule Chat.OpenAI do
   use GenServer
 
+  @moduledoc """
+  Module implements GenServer interface to ExOpenAI library to save msg state.
+  Requires OPENAI_API_KEY and OPENAI_ORGANIZATION_KEY in Environment.
+  """
+
   @impl true
   def init(_opts) do
     {:ok, []}
@@ -16,7 +21,6 @@ defmodule Chat.OpenAI do
 
   @impl true
   def handle_call({:msg, m}, _from, msgs) do
-    # IO.inspect(msgs, label: "MSG")
     with msgs <- msgs ++ [new_msg(m)] do
       case ExOpenAI.Chat.create_chat_completion(msgs, "gpt-3.5-turbo") do
         {:ok, res} ->
@@ -34,6 +38,6 @@ defmodule Chat.OpenAI do
   end
 
   def send(msg) do
-    GenServer.call(:gptserver, {:msg, msg}, 50000)
+    GenServer.call(:gptserver, {:msg, msg}, 50_000)
   end
 end
