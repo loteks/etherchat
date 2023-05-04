@@ -1,6 +1,7 @@
 defmodule ChatWeb.ChatLive do
   use ChatWeb, :live_view
 
+  @impl true
   def mount(%{"room_id" => room_id}, _session, socket) do
     topic = "room:#{room_id}"
 
@@ -11,6 +12,7 @@ defmodule ChatWeb.ChatLive do
     {:ok, assign(socket, room: room_id, topic: topic, loading: false, prompt: [], response: []), temporary_assigns: [prompt: [], response: []]}
   end
 
+  @impl true
   def handle_event("prompt", %{"prompt" => prompt}, socket) do
     ChatWeb.Endpoint.broadcast(socket.assigns.topic, "new_prompt", prompt)
 
@@ -22,22 +24,27 @@ defmodule ChatWeb.ChatLive do
     {:noreply, socket}
   end
 
+  @impl true
   def handle_event("refresh", _params, socket) do
     {:noreply, push_navigate(socket, to: "/", replace: true)}
   end
 
+  @impl true
   def handle_info(%{event: "new_prompt"} = msg, socket) do
     {:noreply, assign(socket, loading: true, prompt: "🧑‍💻 #{msg.payload}")}
   end
 
+  @impl true
   def handle_info(%{event: "new_response"} = msg, socket) do
     {:noreply, assign(socket, loading: false, response: "🤖 #{msg.payload}")}
   end
 
+  @impl true
   def handle_params(_params, uri, socket) do
     {:noreply, assign(socket, uri: URI.parse(uri))}
   end
 
+  @impl true
   def render(assigns) do
     ~H"""
     <div phx-update="append" id="chat">
