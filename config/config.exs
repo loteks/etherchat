@@ -38,8 +38,7 @@ config :chat, Chat.Mailer, adapter: Swoosh.Adapters.Local
 config :esbuild,
   version: "0.17.11",
   default: [
-    args:
-      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+    args: ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
@@ -54,7 +53,8 @@ config :tailwind,
       --output=../priv/static/assets/app.css
     ),
     cd: Path.expand("../assets", __DIR__),
-    env: %{"BROWSERSLIST_IGNORE_OLD_DATA" => "1"} # remove error message
+    # remove error message
+    env: %{"BROWSERSLIST_IGNORE_OLD_DATA" => "1"}
   ]
 
 # Configures Elixir's Logger

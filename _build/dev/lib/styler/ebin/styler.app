@@ -1,0 +1,11 @@
+{application,styler,
+             [{applications,[kernel,stdlib,elixir,logger]},
+              {description,"A code-style enforcer that will just FIFY instead of complaining"},
+              {modules,['Elixir.Styler','Elixir.Styler.Style',
+                        'Elixir.Styler.Style.Defs',
+                        'Elixir.Styler.Style.ModuleDirectives',
+                        'Elixir.Styler.Style.Pipes',
+                        'Elixir.Styler.Style.Simple',
+                        'Elixir.Styler.StyleError','Elixir.Styler.Zipper']},
+              {registered,[]},
+              {vsn,"0.5.1"}]}.
