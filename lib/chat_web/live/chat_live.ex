@@ -74,13 +74,13 @@ defmodule ChatWeb.ChatLive do
       </md-block>
     </div>
     <form phx-submit="prompt">
-      <input type="text" name="prompt" placeholder="Ask Neubot a question..." class="input input-bordered input-lg w-full" autofocus autocomplete="off" />
+      <input type="text" name="prompt" placeholder="Ask your assistant a question..." class="input input-bordered input-lg w-full" autofocus autocomplete="off" />
     </form>
     <progress :if={@loading} class="progress progress-info w-56"></progress>
     <br />
-    <p class="text-xl">You are chatting with Neubot at <em><%= @uri %></em></p>
+    <p class="text-xl">Share this page for group chats <em><%= @uri %></em></p>
     <br />
-    <p class="text-lg">Share this page for group chats or <button class="btn-link" phx-click="refresh">generate</button> a new random page</p>
+    <p class="text-lg"><button class="btn-link" phx-click="refresh">Generate</button> a new random page</p>
     """
   end
 end
