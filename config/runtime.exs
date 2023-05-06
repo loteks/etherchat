@@ -33,7 +33,7 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  host = System.get_env("PHX_HOST") || "etherbot.net"
+  host = System.get_env("PHX_HOST") || "etherchat.net"
   port = String.to_integer(System.get_env("PORT") || "4000")
 
   config :chat, ChatWeb.Endpoint,

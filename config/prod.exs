@@ -11,7 +11,7 @@ import Config
 # before starting your production server.
 config :chat, ChatWeb.Endpoint,
   cache_static_manifest: "priv/static/cache_manifest.json",
-  check_origin: ["//etherbot.net", "//www.etherbot.net"]
+  check_origin: ["//etherchat.net", "//www.etherchat.net"]
 
 # Configures Swoosh API Client
 config :swoosh, api_client: Swoosh.ApiClient.Finch, finch_name: Chat.Finch
