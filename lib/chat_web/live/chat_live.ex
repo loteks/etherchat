@@ -80,7 +80,7 @@ defmodule ChatWeb.ChatLive do
     <br />
     <p class="text-xl">Share this page for group chats <em><%= @uri %></em></p>
     <br />
-    <p class="text-lg"><button class="btn-link" phx-click="refresh">Generate</button> a new random page</p>
+    <p class="text-lg"><button class="btn-link" phx-click="refresh">Generate</button> a new random chat page</p>
     """
   end
 end
