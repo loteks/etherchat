@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for neubot on 2023-04-28T18:11:34-05:00
+# fly.toml app configuration file generated for etherbot on 2023-05-06T12:56:09-05:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "neubot"
+app = "etherbot"
 primary_region = "dfw"
 kill_signal = "SIGTERM"
 kill_timeout = "5s"
@@ -12,7 +12,7 @@ kill_timeout = "5s"
   auto_rollback = true
 
 [env]
-  PHX_HOST = "neubot.fly.dev"
+  PHX_HOST = "etherbot.fly.dev"
   PORT = "8080"
   PRIMARY_REGION = "dfw"
 
