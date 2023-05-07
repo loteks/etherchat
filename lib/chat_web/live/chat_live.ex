@@ -12,7 +12,6 @@ defmodule ChatWeb.ChatLive do
 
   @impl true
   def mount(%{"chat" => chat}, _session, socket) do
-
     if connected?(socket) do
       ChatWeb.Endpoint.subscribe(chat)
     end
