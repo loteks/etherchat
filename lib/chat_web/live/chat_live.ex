@@ -7,18 +7,17 @@ defmodule ChatWeb.ChatLive do
 
   @doc """
   Use new random page generated in page_controller to initiate liveview mount.
-  Each page is a topic with a prompt and response.
+  Each page is a chat with a prompt and response.
   """
 
   @impl true
-  def mount(%{"room_id" => room_id}, _session, socket) do
-    topic = "room:#{room_id}"
+  def mount(%{"chat" => chat}, _session, socket) do
 
     if connected?(socket) do
-      ChatWeb.Endpoint.subscribe(topic)
+      ChatWeb.Endpoint.subscribe(chat)
     end
 
-    {:ok, assign(socket, topic: topic, loading: false, prompt: [], response: []), temporary_assigns: [prompt: [], response: []]}
+    {:ok, assign(socket, chat: chat, loading: false, prompt: [], response: []), temporary_assigns: [prompt: [], response: []]}
   end
 
   @doc """
@@ -28,11 +27,11 @@ defmodule ChatWeb.ChatLive do
 
   @impl true
   def handle_event("prompt", %{"prompt" => prompt}, socket) do
-    ChatWeb.Endpoint.broadcast(socket.assigns.topic, "new_prompt", prompt)
+    ChatWeb.Endpoint.broadcast(socket.assigns.chat, "new_prompt", prompt)
 
     Task.Supervisor.start_child(ChatWeb.TaskSupervisor, fn ->
       response = Chat.OpenAI.send(prompt)
-      ChatWeb.Endpoint.broadcast(socket.assigns.topic, "new_response", response)
+      ChatWeb.Endpoint.broadcast(socket.assigns.chat, "new_response", response)
     end)
 
     {:noreply, socket}
@@ -74,13 +73,13 @@ defmodule ChatWeb.ChatLive do
       </md-block>
     </div>
     <form phx-submit="prompt">
-      <input type="text" name="prompt" placeholder="Ask your assistant a question..." class="input input-bordered input-lg w-full" autofocus autocomplete="off" />
+      <input type="text" name="prompt" class="input input-bordered input-lg w-full" autofocus autocomplete="off" />
     </form>
     <progress :if={@loading} class="progress progress-info w-56"></progress>
     <br />
-    <p class="text-xl">Share this page for group chats <em><%= @uri %></em></p>
+    <p class="text-xl">Share this chat <em><%= @uri %></em></p>
     <br />
-    <p class="text-lg"><button class="btn-link" phx-click="refresh">Generate</button> a new random chat page</p>
+    <p class="text-lg"><button class="btn-link" phx-click="refresh">Create</button> a new chat</p>
     """
   end
 end

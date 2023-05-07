@@ -6,7 +6,7 @@ defmodule ChatWeb.PageController do
   """
 
   def home(conn, _params) do
-    room = MnemonicSlugs.generate_slug(3)
-    redirect(conn, to: "/#{room}")
+    chat = MnemonicSlugs.generate_slug(3)
+    redirect(conn, to: "/#{chat}")
   end
 end

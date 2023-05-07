@@ -17,7 +17,7 @@ defmodule ChatWeb.Router do
   scope "/", ChatWeb do
     pipe_through(:browser)
 
-    live("/:room_id", ChatLive)
+    live("/:chat", ChatLive)
     get("/", PageController, :home)
   end
 
