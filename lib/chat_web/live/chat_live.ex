@@ -3,11 +3,13 @@ defmodule ChatWeb.ChatLive do
 
   @moduledoc """
   Module provides a LiveView interface to ChatGPT with PubSub to share live chats.
+  Interface is modeled after etherpad. Instead of a "pad" each randomly generated
+  page is a "chat" with a prompt and response. Chat state is maintained for each
+  page by a GenServer and there are no users or user accounts.
   """
 
   @doc """
   Use new random page generated in page_controller to initiate liveview mount.
-  Each page is a chat with a prompt and response.
   """
 
   @impl true
@@ -22,6 +24,7 @@ defmodule ChatWeb.ChatLive do
   @doc """
   Receive a prompt, send Task to OpenAI for response then share both via PubSub.
   Handle refresh event to generate new random page on demand.
+  Handle custom event to generate new custom page on demand.
   """
 
   @impl true
@@ -39,6 +42,12 @@ defmodule ChatWeb.ChatLive do
   @impl true
   def handle_event("refresh", _params, socket) do
     {:noreply, push_navigate(socket, to: "/", replace: true)}
+  end
+
+  @impl true
+  def handle_event("custom", %{"custom" => custom}, socket) do
+    new_page = URI.encode_www_form(custom)
+    {:noreply, push_navigate(socket, to: "/#{new_page}", replace: true)}
   end
 
   @impl true
@@ -78,7 +87,11 @@ defmodule ChatWeb.ChatLive do
     <br />
     <p class="text-xl">Share this chat <em><%= @uri %></em></p>
     <br />
-    <p class="text-lg"><button class="btn-link" phx-click="refresh">Create</button> a new chat</p>
+    <p class="text-lg"><button class="btn-link" phx-click="refresh">Create</button> a new random chat</p>
+    <br />
+    <form phx-submit="custom">Create a chat with the name <br />
+      <input type="text" name="custom" class="input input-bordered input-sm" autofocus autocomplete="off" />
+    </form>
     """
   end
 end
