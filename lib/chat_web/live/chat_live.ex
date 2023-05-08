@@ -22,8 +22,10 @@ defmodule ChatWeb.ChatLive do
   end
 
   @doc """
-  Receive a prompt, send Task to OpenAI for response then share both via PubSub.
+  Receive a prompt, send Task to OpenAI for response and share both via PubSub.
+
   Handle refresh event to generate new random page on demand.
+
   Handle custom event to generate new custom page on demand.
   """
 
@@ -85,11 +87,12 @@ defmodule ChatWeb.ChatLive do
     </form>
     <progress :if={@loading} class="progress progress-info w-56"></progress>
     <br />
-    <p class="text-xl">Share this chat <em><%= @uri %></em></p>
+    <p class="text-base">Share this chat <em><%= @uri %></em></p>
     <br />
-    <p class="text-lg"><button class="btn-link" phx-click="refresh">Create</button> a new random chat</p>
+    <p class="text-base"><button class="btn-link" phx-click="refresh">Create</button> a new random chat</p>
     <br />
-    <form phx-submit="custom">Create a chat with the name <br />
+    <form phx-submit="custom">
+      <p class="text-base">Create a chat with the name </p>
       <input type="text" name="custom" class="input input-bordered input-sm" autofocus autocomplete="off" />
     </form>
     """
