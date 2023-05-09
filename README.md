@@ -1,4 +1,18 @@
-# Chat
+# Etherchat
+
+Interface to ChatGPT API implemented in Phoenix LiveView
+
+<br>
+
+Patterned after Etherpad, generates random pages for private chats without user accounts.
+Phoenix PubSub implements real-time sharing to be used as a tool in pair programming.
+
+# Config
+
+Expects OPENAI_API_KEY and OPENAI_ORGANIZATION_KEY to be available in Env
+
+
+# Usage
 
 To start your Phoenix server:
 
