@@ -87,9 +87,9 @@ defmodule ChatWeb.ChatLive do
     </form>
     <progress :if={@loading} class="progress progress-info w-56"></progress>
     <div class="text-base mt-5 mb-5">Share this chat <em><%= @uri %></em></div>
-    <div class="text-base mt-5 mb-5"><button class="btn-link" phx-click="refresh">Create</button> a new random chat</div>
+    <div class="text-base mt-5 mb-5"><button class="btn-link" phx-click="refresh">Create</button> new random chat</div>
     <form phx-submit="custom">
-      <p class="text-base">Create a chat with the name</p>
+      <p class="text-base">Create custom chat name</p>
       <input type="text" name="custom" class="input input-bordered input-sm" autofocus autocomplete="off" />
     </form>
     """
