@@ -3,7 +3,7 @@ defmodule ChatWeb.ChatLive do
 
   @moduledoc """
   Module provides a LiveView interface to ChatGPT with PubSub to share live chats.
-  Interface is modeled after etherpad. Instead of a "pad" each randomly generated
+  Interface is inspired by etherpad. Instead of a "pad" each randomly generated
   page is a "chat" with a prompt and response. Chat state is maintained for each
   page by a GenServer and there are no users or user accounts.
   """
