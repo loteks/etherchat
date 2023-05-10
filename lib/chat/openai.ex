@@ -6,8 +6,8 @@ defmodule Chat.OpenAI do
 
   Requires OPENAI_API_KEY and OPENAI_ORGANIZATION_KEY in Environment.
 
-  gpt-3.5-turbo is default. To select gpt-4 comment out gpt = "gpt-3.5-turbo"
-  and uncomment gpt = "gpt-4" below, then restart app to reset genserver.
+  gpt-3.5-turbo is default. To select gpt-4 comment out gpt = "gpt-3.5-turbo" and
+  uncomment gpt = "gpt-4" in handle_call below, then restart app to reset genserver.
   """
 
   @impl true
