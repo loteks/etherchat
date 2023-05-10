@@ -16,6 +16,8 @@ Capstone Project for Dockyard Academy
 
 Requires OPENAI_API_KEY and OPENAI_ORGANIZATION_KEY environment variables to be set.
 
+Uses gpt-3.5-turbo by default, change to gpt-4 by uncommenting variable in openai.ex
+
 
 ## Usage
 
