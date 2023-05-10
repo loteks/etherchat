@@ -2,9 +2,11 @@
 
 Web interface to ChatGPT API implemented in Phoenix LiveView
 
+Capstone Project for Dockyard Academy
+
 ## Features
 
-- Patterned after Etherpad, app generates random pages for private chats without user accounts.
+- Inspired by Etherpad, app generates random pages for private chats without user accounts.
 
 - Phoenix PubSub implements real-time sharing to be used as a tool in pair programming.
 
