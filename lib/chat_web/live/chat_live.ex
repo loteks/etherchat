@@ -26,7 +26,7 @@ defmodule ChatWeb.ChatLive do
 
   Handle refresh event to generate new random page on demand.
 
-  Handle custom event to generate new custom page on demand.
+  Handle custom event to generate new custom page on demand (optional).
   """
 
   @impl true
