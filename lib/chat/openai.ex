@@ -4,6 +4,8 @@ defmodule Chat.OpenAI do
   @moduledoc """
   Module implements GenServer interface to ExOpenAI library to save msg state.
   Requires OPENAI_API_KEY and OPENAI_ORGANIZATION_KEY in Environment.
+  gpt-3.5-turbo is default. To select gpt-4 comment out gpt = "gpt-3.5-turbo"
+  and uncomment gpt = "gpt-4" below, then restart app to reset genserver.
   """
 
   @impl true
