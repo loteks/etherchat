@@ -14,7 +14,7 @@ Capstone Project for Dockyard Academy
 
 ## Config
 
-Requires OPENAI_API_KEY and OPENAI_ORGANIZATION_KEY environment variables.
+Requires OPENAI_API_KEY and OPENAI_ORGANIZATION_KEY environment variables to be set.
 
 
 ## Usage
