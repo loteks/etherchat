@@ -83,14 +83,15 @@ defmodule ChatWeb.ChatLive do
       </md-block>
     </div>
     <form phx-submit="prompt">
-      <input type="text" name="prompt" class="input input-bordered input-lg w-full" autofocus autocomplete="off" />
+      <textarea name="prompt" class="input input-bordered input-lg w-full" autofocus ></textarea>
+      <progress :if={@loading} class="progress progress-info w-56"></progress>
+      <input type="submit" value="Submit" class="btn btn-primary mt-2" />
     </form>
-    <progress :if={@loading} class="progress progress-info w-56"></progress>
-    <div class="mt-5 mb-5 text-base">Share this chat <em><%= @uri %></em></div>
-    <div class="mt-5 mb-5 text-base"><button class="btn-link" phx-click="refresh">Create</button> new random chat</div>
+    <div class="text-right mt-5 mb-5 text-base">Share this chat <em><%= @uri %></em></div>
+    <div class="text-right mt-5 mb-5 text-base"><button class="btn-link" phx-click="refresh">Create</button> a new random chat</div>
     <form phx-submit="custom">
-      <p class="text-base">Create custom chat name</p>
-      <input type="text" name="custom" class="input input-bordered input-sm" autofocus autocomplete="off" />
+      <div class="text-right text-base">Create custom chat name<br>
+      <input type="text" name="custom" class="input input-bordered input-sm" autofocus /></div>
     </form>
     """
   end
